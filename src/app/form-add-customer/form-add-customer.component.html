@@ -1,0 +1,60 @@
+<h3>Customer</h3>
+<form class="example-form shadow p-3 mb-5 bg-white rounded" [formGroup]= "customer" novalidate width="100%">
+    <mat-form-field class="example-full-width">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" placeholder="Name" formControlName="name" minlength="6" maxlength="20" required>
+      <mat-error *ngIf="customer.controls['name'].invalid && (customer.controls['name'].dirty || customer.controls['name'].touched)" class="alert alert-danger">
+          <div *ngIf="customer.controls['name'].errors.required">Name is Required</div>
+          <div *ngIf="customer.controls['name'].errors.minlength">Minium 6 Chracters are Required</div>
+          <div *ngIf="customer.controls['name'].errors.maxlength">Maxium 20 Chracters are Required</div>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Age</mat-label>
+        <input matInput type="number" formControlName="age" required min="0" max="100">
+        <mat-error *ngIf="customer.controls['age'].invalid && (customer.controls['age'].dirty || customer.controls['age'].touched)" class="alert alert-danger">
+            <div *ngIf="customer.controls['age'].errors.required">Age is Required</div>
+            <div *ngIf="customer.controls['age'].errors.min">Age must be at least 1</div>
+            <div *ngIf="customer.controls['age'].errors.max">Age must be at most 100</div>
+        </mat-error>
+      </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Address</mat-label>
+        <input matInput type="text" placeholder="Address" formControlName="address" required minlength="10" maxlength="50">
+        <mat-error *ngIf="customer.controls['address'].invalid && (customer.controls['address'].dirty || customer.controls['address'].touched)" class="alert alert-danger">
+            <div *ngIf="customer.controls['address'].errors.required">Address is required</div>
+            <div *ngIf="!constrainted && customer.controls['address'].errors.minlength">Address must be at least 10 characters</div>
+            <div *ngIf="constrainted ">Address must be at least 20 characters</div>
+            <div *ngIf="customer.controls['address'].errors.maxlength">Address must be at most 50 characters</div>
+        </mat-error>
+    </mat-form-field>
+
+    <!-- <section class="example-section" *ngIf="checkbox">
+      <mat-checkbox  name="test" class="example-margin" formControlName="checkB" (click)="checkEmail()">Check Mail</mat-checkbox>
+    </section> -->
+
+    <mat-form-field class="example-full-width"  >
+        <mat-label>Email</mat-label>
+        <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" >
+        <mat-error *ngIf="customer.controls['email'].invalid && (customer.controls['email'].dirty || customer.controls['email'].touched)" class="alert alert-danger">
+            <div *ngIf="customer.controls['email'].errors.required">Email is required</div>
+            <div *ngIf="customer.controls['email'].errors.email">Email valid</div>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Career</mat-label>
+        <input matInput type="text" placeholder="Career" formControlName="career">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Hobby</mat-label>
+        <input matInput type="text" placeholder="Hobby..."formControlName="hobby" class="form-control">
+    </mat-form-field>
+    <section>
+        <div class="example-button-row">
+            <button mat-raised-button color="primary" type="submit" (click)="addCustomer()" *ngIf="CheckCreate" [disabled]="!customer.valid" >Submit</button>
+            <button mat-raised-button color="primary" type="submit" (click)="updateCustomer()" *ngIf="CheckUpdate" [disabled]="!customer.valid" >Update</button>
+            <button mat-raised-button color="warn" type="submit" (click)="back()" >Back</button>
+
+        </div>
+    </section>
+  </form>

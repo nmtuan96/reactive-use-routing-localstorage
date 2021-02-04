@@ -1,0 +1,14 @@
+table {
+    width: 100%;
+  }
+  
+  th {
+    text-align: left;
+  }
+  .example-button-row .mat-button-base {
+    margin: 8px 8px 8px 0;
+  }
+  .example-button-row {
+    display: table-cell;
+    width: 490px;
+  }
