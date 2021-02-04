@@ -18,6 +18,8 @@
             <div *ngIf="customer.controls['age'].errors.max">Age must be at most 100</div>
         </mat-error>
       </mat-form-field>
+
+
     <mat-form-field class="example-full-width">
         <mat-label>Address</mat-label>
         <input matInput type="text" placeholder="Address" formControlName="address" required minlength="10" maxlength="50">
@@ -41,20 +43,39 @@
             <div *ngIf="customer.controls['email'].errors.email">Email valid</div>
         </mat-error>
     </mat-form-field>
+
+
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Birthday</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthday">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="customer.controls['birthday'].invalid && (customer.controls['birthday'].dirty || customer.controls['birthday'].touched)" class="alert alert-danger">
+            <div *ngIf="customer.controls['birthday'].errors.required">Birthday is Required</div>
+            <div *ngIf="customer.controls['birthday'].errors?.dateRange">Birthday more than Now time</div>
+        </mat-error>
+      </mat-form-field>
+
+
     <mat-form-field class="example-full-width">
         <mat-label>Career</mat-label>
         <input matInput type="text" placeholder="Career" formControlName="career">
     </mat-form-field>
+
+
     <mat-form-field class="example-full-width">
         <mat-label>Hobby</mat-label>
         <input matInput type="text" placeholder="Hobby..."formControlName="hobby" class="form-control">
     </mat-form-field>
+
+
     <section>
         <div class="example-button-row">
             <button mat-raised-button color="primary" type="submit" (click)="addCustomer()" *ngIf="CheckCreate" [disabled]="!customer.valid" >Submit</button>
             <button mat-raised-button color="primary" type="submit" (click)="updateCustomer()" *ngIf="CheckUpdate" [disabled]="!customer.valid" >Update</button>
             <button mat-raised-button color="warn" type="submit" (click)="back()" >Back</button>
-
         </div>
     </section>
   </form>

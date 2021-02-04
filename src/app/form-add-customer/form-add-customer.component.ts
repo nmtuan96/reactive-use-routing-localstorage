@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../local-storage.service';
 import { DataService } from '../service/data.service';
@@ -17,6 +17,7 @@ export class FormAddCustomerComponent implements OnInit {
     age: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
     address: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
     email: new FormControl('', [Validators.required, Validators.email]),
+    birthday: new FormControl('', [Validators.required, compareDate()]),
     career: new FormControl(''),
     hobby: new FormControl(''),
     checkB : new FormControl(false),
@@ -28,6 +29,8 @@ export class FormAddCustomerComponent implements OnInit {
   checkbox: boolean = false;
   valueCustomer: any;
   idUpdateCustomer: any;
+  booleanCheckUpdate: boolean = false;
+
   constructor(private fb: FormBuilder, private localStorage: LocalStorageService, private router: Router, private data: DataService) {
     
   }
@@ -38,12 +41,14 @@ export class FormAddCustomerComponent implements OnInit {
     this.list = this.localStorage.showList();
     if(this.data.checkData){
       this.data.shareID.subscribe(x=>{
-        this.idUpdateCustomer= x;
+        this.idUpdateCustomer=  x;
+        this.booleanCheckUpdate= true;
         this.valueCustomer=  this.list[x];
         this.customer.controls['id'].setValue(this.valueCustomer.id);
         this.customer.controls['name'].setValue(this.valueCustomer.name);
         this.customer.controls['age'].setValue(this.valueCustomer.age);
         this.customer.controls['address'].setValue(this.valueCustomer.address);
+        this.customer.controls['birthday'].setValue(this.valueCustomer.birthday);
         this.customer.controls['career'].setValue(this.valueCustomer.career);
         this.customer.controls['hobby'].setValue(this.valueCustomer.hobby);
         this.customer.controls['checkB'].setValue(this.valueCustomer.checkB);
@@ -75,7 +80,7 @@ export class FormAddCustomerComponent implements OnInit {
       
   }
   updateCustomer(){
-    if(this.idUpdateCustomer){
+    if(this.booleanCheckUpdate){
       for (let i in this.list) {
         if(this.idUpdateCustomer == i){
           this.list[i] = this.customer.value
@@ -83,6 +88,7 @@ export class FormAddCustomerComponent implements OnInit {
       }
       this.localStorage.set('1',this.list);
       this.customer.reset();
+      this.idUpdateCustomer = false;
       this.CheckUpdate = false;
       this.router.navigateByUrl('/customers');
     }
@@ -91,6 +97,7 @@ export class FormAddCustomerComponent implements OnInit {
     this.customer.reset();
     this.router.navigateByUrl('/customers');
   }
+ 
   
   // checkEmail(){
   //   var id = this.customer.value.id
@@ -134,4 +141,18 @@ export class FormAddCustomerComponent implements OnInit {
   //     } else this.constrainted = false;
   //   })
   // }
+}
+export function compareDate(): ValidatorFn{
+  return (control: AbstractControl) : ValidationErrors| null =>{
+    const value = control.value;
+    const max = new Date();
+    if(!value){
+      return null; 
+    }
+    let isRangeValid = value.getTime() - max.getTime();
+    if(isRangeValid >0){
+      return {dateRange:true};
+    }
+    return null;
+  }
 }

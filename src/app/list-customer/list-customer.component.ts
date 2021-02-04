@@ -11,14 +11,14 @@ import { DataService } from '../service/data.service';
   styleUrls: ['./list-customer.component.css']
 })
 export class ListCustomerComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'age', 'address', 'email', 'career', 'hobby', 'action'];
+  displayedColumns: string[] = ['id', 'name', 'age', 'address', 'email', 'birthday' ,'career', 'hobby', 'action'];
   dataSource = new MatTableDataSource<any[]>();
   list: any = [];
   checkData: boolean= false;
   constructor(private localStorage: LocalStorageService,private router: Router, private data: DataService) { }
 
   ngOnInit(): void {
-    this.list = this.localStorage.get('1')
+    this.list = this.localStorage.get('1');
     this.dataSource.data = this.list;
   }
  

@@ -12,6 +12,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormAddCustomerComponent } from './form-add-customer/form-add-customer.component';
 import { ListCustomerComponent } from './list-customer/list-customer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +31,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatCheckboxModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
