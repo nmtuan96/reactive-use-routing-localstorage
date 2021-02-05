@@ -16,7 +16,6 @@ export class FormAddCustomerComponent implements OnInit {
     name: new FormControl('',[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
     age: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
     address: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
     birthday: new FormControl('', [Validators.required, compareDate()]),
     career: new FormControl(''),
     hobby: new FormControl(''),
@@ -25,7 +24,7 @@ export class FormAddCustomerComponent implements OnInit {
 
   CheckUpdate: boolean = false;
   CheckCreate: boolean = false;
-  // constrainted: boolean;
+  constrainted: boolean;
   checkbox: boolean = false;
   valueCustomer: any;
   idUpdateCustomer: any;
@@ -37,25 +36,62 @@ export class FormAddCustomerComponent implements OnInit {
   
   
   ngOnInit(): void {
-  //  this.constraintValidate();
+   this.constraintValidate();
     this.list = this.localStorage.showList();
     if(this.data.checkData){
       this.data.shareID.subscribe(x=>{
         this.idUpdateCustomer=  x;
         this.booleanCheckUpdate= true;
         this.valueCustomer=  this.list[x];
-        this.customer.controls['id'].setValue(this.valueCustomer.id);
-        this.customer.controls['name'].setValue(this.valueCustomer.name);
-        this.customer.controls['age'].setValue(this.valueCustomer.age);
-        this.customer.controls['address'].setValue(this.valueCustomer.address);
-        this.customer.controls['birthday'].setValue(this.valueCustomer.birthday);
-        this.customer.controls['career'].setValue(this.valueCustomer.career);
-        this.customer.controls['hobby'].setValue(this.valueCustomer.hobby);
-        this.customer.controls['checkB'].setValue(this.valueCustomer.checkB);
-        this.checkbox= this.valueCustomer.checkB;
         if(this.valueCustomer.email){
-          this.customer.controls['email'].setValue(this.valueCustomer.email);
+          this.valueCustomer.checkB = true;
+          this.customer.controls['checkB'].setValue(true);
+        }else{
+          this.valueCustomer.checkB = false;
+          this.customer.controls['checkB'].setValue(false);
         }
+        if(this.valueCustomer.checkB){
+          this.customer = this.fb.group({
+            id: new FormControl(''),
+            name: new FormControl('',[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
+            age: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
+            address: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
+            email: new FormControl('', [Validators.required, Validators.email]),
+            birthday: new FormControl('', [Validators.required, compareDate()]),
+            career: new FormControl(''),
+            hobby: new FormControl(''),
+            checkB : new FormControl(true),
+          });
+          this.customer.controls['id'].setValue(this.valueCustomer.id);
+          this.customer.controls['name'].setValue(this.valueCustomer.name);
+          this.customer.controls['age'].setValue(this.valueCustomer.age);
+          this.customer.controls['address'].setValue(this.valueCustomer.address);
+          this.customer.controls['birthday'].setValue(this.valueCustomer.birthday);
+          this.customer.controls['career'].setValue(this.valueCustomer.career);
+          this.customer.controls['hobby'].setValue(this.valueCustomer.hobby);
+          this.checkbox= this.valueCustomer.checkB;
+          this.customer.controls['email'].setValue(this.valueCustomer.email);
+        }else{
+          this.customer= this.fb.group({
+            id: new FormControl(''),
+            name: new FormControl('',[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
+            age: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
+            address: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
+            birthday: new FormControl('', [Validators.required, compareDate()]),
+            career: new FormControl(''),
+            hobby: new FormControl(''),
+            checkB : new FormControl(false),
+          });
+          this.customer.controls['id'].setValue(this.valueCustomer.id);
+          this.customer.controls['name'].setValue(this.valueCustomer.name);
+          this.customer.controls['age'].setValue(this.valueCustomer.age);
+          this.customer.controls['address'].setValue(this.valueCustomer.address);
+          this.customer.controls['birthday'].setValue(this.valueCustomer.birthday);
+          this.customer.controls['career'].setValue(this.valueCustomer.career);
+          this.customer.controls['hobby'].setValue(this.valueCustomer.hobby);
+          this.checkbox= this.valueCustomer.checkB;
+        }
+        
         this.data.checkData= false;
       });
     }
@@ -76,7 +112,7 @@ export class FormAddCustomerComponent implements OnInit {
       this.customer.reset();
       this.CheckCreate = false;
       this.router.navigateByUrl('/customers');
-      // this.checkbox = false;
+      this.checkbox = false;
       
   }
   updateCustomer(){
@@ -90,6 +126,7 @@ export class FormAddCustomerComponent implements OnInit {
       this.customer.reset();
       this.idUpdateCustomer = false;
       this.CheckUpdate = false;
+      this.checkbox = false;
       this.router.navigateByUrl('/customers');
     }
   }
@@ -99,48 +136,53 @@ export class FormAddCustomerComponent implements OnInit {
   }
  
   
-  // checkEmail(){
-  //   var id = this.customer.value.id
-  //   var nameCheck = this.customer.value.name;
-  //   var ageCheck = this.customer.value.age;
-  //   var address = this.customer.value.address;
-  //   var career = this.customer.value.career;
-  //   var hobby = this.customer.value.hobby;
-  //   var email= this.customer.value.email;
-  //   this.checkbox =  !this.checkbox;
-  //   if(this.checkbox == false){
-  //     this.customer = this.fb.group({
-  //       id: new FormControl(id),
-  //       name: new FormControl(nameCheck,[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
-  //       age: new FormControl(ageCheck, [Validators.required, Validators.min(0), Validators.max(100)]),
-  //       address: new FormControl(address, [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
-  //       career: new FormControl(career),
-  //       hobby: new FormControl(hobby),
-  //       checkB : new FormControl(false),
-  //     });
-  //   }else{
-  //     this.customer = this.fb.group({
-  //       id: new FormControl(id),
-  //       name: new FormControl(nameCheck,[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
-  //       age: new FormControl(ageCheck, [Validators.required, Validators.min(0), Validators.max(100)]),
-  //       address: new FormControl(address, [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
-  //       email: new FormControl(email, [Validators.required, Validators.email]),
-  //       career: new FormControl(career),
-  //       hobby: new FormControl(hobby),
-  //       checkB : new FormControl(true),
-  //     });
-  //   }
-  // }
+  checkEmail(){
+    var id = this.customer.value.id
+    var nameCheck = this.customer.value.name;
+    var ageCheck = this.customer.value.age;
+    var address = this.customer.value.address;
+    var career = this.customer.value.career;
+    var hobby = this.customer.value.hobby;
+    var email= this.customer.value.email;
+    var birthday = this.customer.value.birthday;
+    this.checkbox =  !this.checkbox;
+    if(this.checkbox == false){
+      debugger;
+      this.customer = this.fb.group({
+        id: new FormControl(id),
+        name: new FormControl(nameCheck,[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
+        age: new FormControl(ageCheck, [Validators.required, Validators.min(0), Validators.max(100)]),
+        address: new FormControl(address, [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
+        birthday: new FormControl(birthday, [Validators.required, compareDate()]),
+        career: new FormControl(career),
+        hobby: new FormControl(hobby),
+        checkB : new FormControl(false),
+      });
+    }else{
+      debugger;
+      this.customer = this.fb.group({
+        id: new FormControl(id),
+        name: new FormControl(nameCheck,[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
+        age: new FormControl(ageCheck, [Validators.required, Validators.min(0), Validators.max(100)]),
+        address: new FormControl(address, [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
+        email: new FormControl(email, [Validators.required, Validators.email]),
+        birthday: new FormControl(birthday, [Validators.required, compareDate()]),
+        career: new FormControl(career),
+        hobby: new FormControl(hobby),
+        checkB : new FormControl(true),
+      });
+    }
+  }
   
-  // constraintValidate() {
-  //   const address = this.customer.get('address');
-  //   this.customer.get('age').valueChanges.subscribe(age=>{
-  //     if(age > 15){
-  //       address.setValidators([Validators.required, Validators.minLength(20) , Validators.maxLength(50)]);
-  //       this.constrainted = true;
-  //     } else this.constrainted = false;
-  //   })
-  // }
+  constraintValidate() {
+    const address = this.customer.get('address');
+    this.customer.get('age').valueChanges.subscribe(age=>{
+      if(age > 15){
+        address.setValidators([Validators.required, Validators.minLength(20) , Validators.maxLength(50)]);
+        this.constrainted = true;
+      } else this.constrainted = false;
+    })
+  }
 }
 export function compareDate(): ValidatorFn{
   return (control: AbstractControl) : ValidationErrors| null =>{
@@ -149,7 +191,7 @@ export function compareDate(): ValidatorFn{
     if(!value){
       return null; 
     }
-    let isRangeValid = value.getTime() - max.getTime();
+    let isRangeValid = value - max.getTime();
     if(isRangeValid >0){
       return {dateRange:true};
     }

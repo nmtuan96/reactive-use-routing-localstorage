@@ -8,7 +8,7 @@ import { MatTableModule } from '@angular/material/table'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormAddCustomerComponent } from './form-add-customer/form-add-customer.component';
 import { ListCustomerComponent } from './list-customer/list-customer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,7 +34,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     BrowserAnimationsModule,
     MatDatepickerModule,
     MatIconModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
