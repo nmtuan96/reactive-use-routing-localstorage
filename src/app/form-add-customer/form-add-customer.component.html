@@ -75,7 +75,7 @@
 
     <section>
         <div class="example-button-row">
-            <button mat-raised-button color="primary" type="submit" (click)="addCustomer()" *ngIf="CheckCreate" [disabled]="!customer.valid" >Submit</button>
+            <button mat-raised-button color="primary" type="submit" [debounceTime]="700" (debounceClick)="addCustomer()" *ngIf="CheckCreate" [disabled]="!customer.valid" appDebounceClick>Submit</button>
             <button mat-raised-button color="primary" type="submit" (click)="updateCustomer()" *ngIf="CheckUpdate" [disabled]="!customer.valid" >Update</button>
             <button mat-raised-button color="warn" type="submit" (click)="back()" >Back</button>
         </div>

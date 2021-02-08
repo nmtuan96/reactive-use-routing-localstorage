@@ -18,6 +18,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AgePipe } from './pipes/age.pipe';
 import { NumberOnlyDirective } from './directives/number-only.directive';
 import { StringNameDirective } from './directives/string-name.directive';
+import { DebounceClickDirective } from './directives/debounce-click.directive';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { StringNameDirective } from './directives/string-name.directive';
     ListCustomerComponent,
     AgePipe,
     NumberOnlyDirective,
-    StringNameDirective
+    StringNameDirective,
+    DebounceClickDirective
   ],
   imports: [
     BrowserModule,
