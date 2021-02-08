@@ -15,12 +15,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AgePipe } from './pipes/age.pipe';
+import { NumberOnlyDirective } from './directives/number-only.directive';
+import { StringNameDirective } from './directives/string-name.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormAddCustomerComponent,
-    ListCustomerComponent
+    ListCustomerComponent,
+    AgePipe,
+    NumberOnlyDirective,
+    StringNameDirective
   ],
   imports: [
     BrowserModule,

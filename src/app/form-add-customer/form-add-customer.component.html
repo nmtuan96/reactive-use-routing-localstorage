@@ -2,7 +2,7 @@
 <form class="example-form shadow p-3 mb-5 bg-white rounded" [formGroup]= "customer" novalidate width="100%">
     <mat-form-field class="example-full-width">
       <mat-label>Name</mat-label>
-      <input matInput type="text" placeholder="Name" formControlName="name" minlength="6" maxlength="20" required>
+      <input matInput type="text" placeholder="Name" formControlName="name" minlength="6" maxlength="20" required appStringName appStringName>
       <mat-error *ngIf="customer.controls['name'].invalid && (customer.controls['name'].dirty || customer.controls['name'].touched)">
           <div *ngIf="customer.controls['name'].errors.required">Name is Required</div>
           <div *ngIf="customer.controls['name'].errors.minlength">Minium 6 Chracters are Required</div>
@@ -11,7 +11,7 @@
     </mat-form-field>
     <mat-form-field class="example-full-width">
         <mat-label>Age</mat-label>
-        <input matInput type="number" formControlName="age" required min="0" max="100">
+        <input matInput type="number" formControlName="age" required min="0" max="100" appNumberOnly>
         <mat-error *ngIf="customer.controls['age'].invalid && (customer.controls['age'].dirty || customer.controls['age'].touched)">
             <div *ngIf="customer.controls['age'].errors.required">Age is Required</div>
             <div *ngIf="customer.controls['age'].errors.min">Age must be at least 1</div>

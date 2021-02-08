@@ -34,7 +34,7 @@ export class FormAddCustomerComponent implements OnInit {
     
   }
   
-  
+  checkNum: number;
   ngOnInit(): void {
    this.constraintValidate();
     this.list = this.localStorage.showList();
@@ -147,7 +147,6 @@ export class FormAddCustomerComponent implements OnInit {
     var birthday = this.customer.value.birthday;
     this.checkbox =  !this.checkbox;
     if(this.checkbox == false){
-      debugger;
       this.customer = this.fb.group({
         id: new FormControl(id),
         name: new FormControl(nameCheck,[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
@@ -159,7 +158,6 @@ export class FormAddCustomerComponent implements OnInit {
         checkB : new FormControl(false),
       });
     }else{
-      debugger;
       this.customer = this.fb.group({
         id: new FormControl(id),
         name: new FormControl(nameCheck,[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
