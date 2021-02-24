@@ -17,6 +17,7 @@ export class FormAddCustomerComponent implements OnInit {
     age: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
     address: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
     birthday: new FormControl('', [Validators.required, compareDate()]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     career: new FormControl(''),
     hobby: new FormControl(''),
     checkB : new FormControl(false),
@@ -25,7 +26,7 @@ export class FormAddCustomerComponent implements OnInit {
   CheckUpdate: boolean = false;
   CheckCreate: boolean = false;
   constrainted: boolean;
-  checkbox: boolean = false;
+  checkbox= false;
   valueCustomer: any;
   idUpdateCustomer: any;
   booleanCheckUpdate: boolean = false;
@@ -51,45 +52,19 @@ export class FormAddCustomerComponent implements OnInit {
           this.customer.controls['checkB'].setValue(false);
         }
         if(this.valueCustomer.checkB){
-          this.customer = this.fb.group({
-            id: new FormControl(''),
-            name: new FormControl('',[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
-            age: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
-            address: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
-            email: new FormControl('', [Validators.required, Validators.email]),
-            birthday: new FormControl('', [Validators.required, compareDate()]),
-            career: new FormControl(''),
-            hobby: new FormControl(''),
-            checkB : new FormControl(true),
-          });
-          this.customer.controls['id'].setValue(this.valueCustomer.id);
-          this.customer.controls['name'].setValue(this.valueCustomer.name);
-          this.customer.controls['age'].setValue(this.valueCustomer.age);
-          this.customer.controls['address'].setValue(this.valueCustomer.address);
-          this.customer.controls['birthday'].setValue(this.valueCustomer.birthday);
-          this.customer.controls['career'].setValue(this.valueCustomer.career);
-          this.customer.controls['hobby'].setValue(this.valueCustomer.hobby);
           this.checkbox= this.valueCustomer.checkB;
-          this.customer.controls['email'].setValue(this.valueCustomer.email);
         }else{
-          this.customer= this.fb.group({
-            id: new FormControl(''),
-            name: new FormControl('',[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
-            age: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)]),
-            address: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
-            birthday: new FormControl('', [Validators.required, compareDate()]),
-            career: new FormControl(''),
-            hobby: new FormControl(''),
-            checkB : new FormControl(false),
-          });
-          this.customer.controls['id'].setValue(this.valueCustomer.id);
-          this.customer.controls['name'].setValue(this.valueCustomer.name);
-          this.customer.controls['age'].setValue(this.valueCustomer.age);
-          this.customer.controls['address'].setValue(this.valueCustomer.address);
-          this.customer.controls['birthday'].setValue(this.valueCustomer.birthday);
-          this.customer.controls['career'].setValue(this.valueCustomer.career);
-          this.customer.controls['hobby'].setValue(this.valueCustomer.hobby);
           this.checkbox= this.valueCustomer.checkB;
+        }
+        this.customer.controls['id'].setValue(this.valueCustomer.id);
+        this.customer.controls['name'].setValue(this.valueCustomer.name);
+        this.customer.controls['age'].setValue(this.valueCustomer.age);
+        this.customer.controls['address'].setValue(this.valueCustomer.address);
+        this.customer.controls['birthday'].setValue(this.valueCustomer.birthday);
+        this.customer.controls['career'].setValue(this.valueCustomer.career);
+        this.customer.controls['hobby'].setValue(this.valueCustomer.hobby);
+        if(this.checkbox){
+          this.customer.controls['email'].setValue(this.valueCustomer.email);
         }
         
         this.data.checkData= false;
@@ -107,7 +82,7 @@ export class FormAddCustomerComponent implements OnInit {
     if(!this.customer.value.id){
       this.customer.value.id = this.list.length +1;
       this.list.push(this.customer.value);
-      this.localStorage.set('1', this.list);
+      this.localStorage.set('customer', this.list);
     }
       this.customer.reset();
       this.CheckCreate = false;
@@ -122,7 +97,7 @@ export class FormAddCustomerComponent implements OnInit {
           this.list[i] = this.customer.value
         }
       }
-      this.localStorage.set('1',this.list);
+      this.localStorage.set('customer',this.list);
       this.customer.reset();
       this.idUpdateCustomer = false;
       this.CheckUpdate = false;
@@ -146,18 +121,7 @@ export class FormAddCustomerComponent implements OnInit {
     var email= this.customer.value.email;
     var birthday = this.customer.value.birthday;
     this.checkbox =  !this.checkbox;
-    if(this.checkbox == false){
-      this.customer = this.fb.group({
-        id: new FormControl(id),
-        name: new FormControl(nameCheck,[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
-        age: new FormControl(ageCheck, [Validators.required, Validators.min(0), Validators.max(100)]),
-        address: new FormControl(address, [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
-        birthday: new FormControl(birthday, [Validators.required, compareDate()]),
-        career: new FormControl(career),
-        hobby: new FormControl(hobby),
-        checkB : new FormControl(false),
-      });
-    }else{
+    if(!this.checkbox){
       this.customer = this.fb.group({
         id: new FormControl(id),
         name: new FormControl(nameCheck,[ Validators.minLength(6), Validators.maxLength(20), Validators.required]),
@@ -167,7 +131,7 @@ export class FormAddCustomerComponent implements OnInit {
         birthday: new FormControl(birthday, [Validators.required, compareDate()]),
         career: new FormControl(career),
         hobby: new FormControl(hobby),
-        checkB : new FormControl(true),
+        checkB : new FormControl(this.checkbox),
       });
     }
   }

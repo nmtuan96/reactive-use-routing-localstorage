@@ -18,19 +18,20 @@ export class ListCustomerComponent implements OnInit {
   constructor(private localStorage: LocalStorageService,private router: Router, private data: DataService) { }
 
   ngOnInit(): void {
-    this.list = this.localStorage.get('1');
+    this.list = this.localStorage.get('customer');
     this.dataSource.data = this.list;
   }
  
   deleteCustomer(i){
     this.list.splice(i,1);
-    this.localStorage.set('1',this.list);
+    this.localStorage.set('customer',this.list);
     this.dataSource.data = this.localStorage.showList();
   }
 
   
   parentData:any;
   editCustomer(i){
+    console.log(i);
     this.data.updateID(i);
     this.data.checkData = true;
     this.router.navigateByUrl("/customers/create");

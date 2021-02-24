@@ -40,7 +40,7 @@ export class LocalStorageService {
   showList(){
     let list= [];
     if(this.localStorage.length !== 0){
-      list= this.get('1')
+      list= this.get('customer')
       return list;
     }
     return list;
